@@ -1,7 +1,8 @@
 import sys
 N= int(input())
 # 상근이는 0, 창영이는 1
-dp = [None for _ in range (N+1) ]
+dp = [None for _ in range(max(N+1, 1001))]
+dp[0]= 0
 dp[1]= 0
 dp[2]= 1
 dp[3]= 0
