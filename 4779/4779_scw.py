@@ -10,8 +10,6 @@ while 1:
 
         if N==0:
             print(A[0])
-        # elif N==1:
-        #     print(*A,sep="")
         else:
             B=[]
             for i in range(1,N+1):
@@ -19,5 +17,5 @@ while 1:
                 A= A + B + A
             print(*A,sep="")
 
-    except ValueError:
+    except :
         break
