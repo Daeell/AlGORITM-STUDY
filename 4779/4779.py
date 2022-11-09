@@ -27,7 +27,7 @@ def line(x, word):
         if x % 2 == 0:
             line(1, '-')+line(x-1, '-')
         else:
-            line(1, '')+line(x-1, '')
+            line(1, ' ')+line(x-1, ' ')
 
 
 for i in list_:
