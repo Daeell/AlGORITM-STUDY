@@ -15,12 +15,6 @@ for i in range(0,N+1):
 for i in range(M):
     s, e = map(int,sys.stdin.readline().split())
     if s == e:
-        print(nums[-1])
+        print(nums[e])
     else:
         print(nums_sum[e]-nums_sum[s-1])
-
-
-
-
-
-
