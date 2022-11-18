@@ -26,7 +26,7 @@ for _ in range(N):
                 elif len(answer)+cnt>len(answer):
                     answer.pop()
                 else:
-                    del answer[len(answer)+cnt]
+                    del answer[len(answer)+cnt-1]
             else:
                 answer.insert(len(answer)+cnt,i)
     print(*answer,sep='')
