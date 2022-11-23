@@ -10,17 +10,15 @@ roadLengthArr = [0] + list(map(int, input().split()))
 oilPriceArr = list(map(int, input().split()))
 
 totalPrice = 0
-currentPrice = oilPriceArr[0]
-currentCity = 0
-i = 1
+cur = 0
 
-while i < CITY_NUM:
-    while currentPrice < oilPriceArr[i]:
-        i += 1
+for i in range(CITY_NUM):
+    if oilPriceArr[cur] <= oilPriceArr[i]:
+        continue
 
-    totalPrice += currentPrice * sum(roadLengthArr[currentCity:i+1])
-    currentPrice = oilPriceArr[i]
-    i += 1
-    currentCity = i
+    totalPrice += oilPriceArr[cur] * sum(roadLengthArr[cur+1:i+1])
+    cur = i
+
+totalPrice += oilPriceArr[cur] * sum(roadLengthArr[cur+1:i+1])
 
 print(totalPrice)
