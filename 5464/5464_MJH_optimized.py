@@ -1,7 +1,9 @@
-# 32452KB, 120ms
+# This is optimized code. Reduced time complexity by 20ms.
+# 33088KB, 100ms
 
 from collections import deque
 import sys
+import math
 
 input = sys.stdin.readline
 N, M = map(int, input().split())
@@ -19,24 +21,31 @@ car_area_map = [0]*(M+1)
 total = 0
 parkingLot = (2**(N+1)) - 1
 wait_list = deque()
+parked_cnt = 0
 
 for _ in range(2*M):
     car = int(input())
     if car < 0:
-        parkingLot = parkingLot | car_area_map[abs(car)]
         if wait_list:
-            car = wait_list.popleft()
+            waiting_car = wait_list.popleft()
+            car_area_map[waiting_car] = car_area_map[abs(car)]
+            idx = int(math.log2(car_area_map[abs(car)]))
+            total += area_table[idx] * car_table[waiting_car]
         else:
-            continue
+            parkingLot = parkingLot | car_area_map[abs(car)]
+            parked_cnt -= 1
+        continue
+
+    if parked_cnt >= N:
+        wait_list.append(car)
+        continue
 
     for i in range(1, N+1):
         if parkingLot & 1 << i :
             car_area_map[car] = 1 << i
             parkingLot = parkingLot & ~(1 << i)
             total += area_table[i] * car_table[car]
+            parked_cnt += 1
             break
-        
-    if car_area_map[car] == 0:
-        wait_list.append(car)
 
 print(total)
