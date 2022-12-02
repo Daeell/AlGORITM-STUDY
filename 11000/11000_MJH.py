@@ -4,6 +4,7 @@
 # Changed methods :
 #   - heappop & heappush -> heapreplace
 #   - sort by [0] and [1] -> only [0] (no sorting options)
+#   - solve in function (By using local variable, can reduce access time)
 
 from heapq import heappush, heapreplace
 import sys
