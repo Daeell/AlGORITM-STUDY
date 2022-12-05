@@ -3,24 +3,24 @@ sys.stdin = open('input.txt', 'r')
 input = sys.stdin.readline
 
 N = int(input())
-children = [0] # 아이들 줄 번호 (0번 안씀)
-dp = [[None,None] for _ in range(N+1)]
-dp[0]= [0,0] # dp[N] = N명의 아이들이 줄을 설 때 최소로 옮겨야 하는 수 
+seq = [0] # 아이들 줄 번호 (0번 안씀)
+dp = [0]*(N+1) # dp 테이블 (0번 안 씀)
 
-for i in range(N): 
-    children.append(int(input()))
+for i in range(N):
+    seq.append(int(input()))
 
+# LIS 구하기 
+dp[1]= 1
+for i in range(2, N+1):
+    tmp = 0 
+    for j in range(1,i): 
+        # i보다 작은 수들의 dp값들 중 최댓값을 구한다 
+        if seq[j] < seq[i] : 
+            #LIS 대상이 될 수 있음 
+            tmp = max(tmp, dp[j])
+    dp[i] = tmp +1 
 
-dp[1] = [0, children[1]] # (최소 움직여야 하는 수, 최고 번호)
+# print(dp)
+print(N-max(dp))
+        
 
-for i in range(1, N+1): 
-    max = dp[i-1][1] 
-    if max < children[i]:
-        dp[i][0] = dp[i-1][0]
-        dp[i][1] = children[i]
-    else :  
-        dp[i][0] = dp[i-1][0] + 1
-        dp[i][1] = max
-
-print(dp)
-print(dp[N][0])
