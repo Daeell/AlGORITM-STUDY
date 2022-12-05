@@ -2,15 +2,17 @@ import sys
 input = sys.stdin.readline
 
 N = int(input().strip())
-input_ = [input().strip() for _ in range(N)]
-start_state = "".join(input_)
-end_state = "".join([str(i) for i in range(1, N+1)])
+init_state = [int(input().strip()) for _ in range(N)]
 
-orderset = set()
-orderset.add(start_state)
+dp_table = [0]*N
 
-cur = start_state
-for i in range(0, N):
-    n = cur[i]
-    rest = cur[0:i-1] + cur[i:N]
-    print(n, rest)
+for i in range(N-1, -1, -1):
+    max_incr = 0
+
+    for j in range(i+1, N):
+        if init_state[i] < init_state[j] and max_incr < dp_table[j]:
+            max_incr = dp_table[j]
+
+    dp_table[i] = max_incr + 1
+
+print(N - max(dp_table))
