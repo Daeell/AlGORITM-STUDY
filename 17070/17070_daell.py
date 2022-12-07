@@ -23,7 +23,7 @@ def dfs(now_c, now_r, dir_):
         if now_c+1 < n and matt[now_c+1][now_r] != 1:
             dfs(now_c+1, now_r, sero)
     if now_r+1 < n and now_c+1 < n:
-        if matt[now_c+1][now_r+1] != 1:
+        if matt[now_c+1][now_r+1] != 1 and matt[now_c][now_r+1] != 1 and matt[now_c+1][now_r] != 1:
             dfs(now_c+1, now_r+1, daegak)
 
 
