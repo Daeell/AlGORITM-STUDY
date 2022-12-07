@@ -1,44 +1,84 @@
 import sys
-from enum import Enum
 input = sys.stdin.readline
 
-def horizontal(pipe_r, pipe_c, cnt) -> int:
-    global arr
-    if arr[pipe_r][pipe_c+1] == 1:
-        return cnt
+def horizontal(pipe_r, pipe_c) -> int:
+    global arr, dp_h, N
 
-    if arr[pipe_r+1][pipe_c+1] == 0 and arr[pipe_r+1][pipe_c] == 0:
-        cnt += diagonal(pipe_r+1, pipe_c+1, cnt)
+    # Enter only if not visited.
+    if dp_h[pipe_r][pipe_c] == -1:
+        cnt = 0
+
+        if arr[pipe_r][pipe_c+1] == 0:
+            cnt += horizontal(pipe_r, pipe_c+1)
+            
+            if arr[pipe_r+1][pipe_c+1] == 0 and arr[pipe_r+1][pipe_c] == 0:
+                cnt += diagonal(pipe_r+1, pipe_c+1)
     
-    cnt += horizontal(pipe_r, pipe_c+1, cnt)
+        dp_h[pipe_r][pipe_c] = cnt
 
-    return cnt
+    return dp_h[pipe_r][pipe_c]
 
-def vertical(pipe_r, pipe_c, cnt) -> int:
-    global arr
+def vertical(pipe_r, pipe_c) -> int:
+    global arr, dp_v, N
 
-def diagonal(pipe_r, pipe_c, cnt) -> int:
-    global arr
-    if arr[pipe_r][pipe_c+1] == 0:
-        cnt += horizontal(pipe_r, pipe_c+1, cnt)
+    # Enter only if not visited.
+    if dp_v[pipe_r][pipe_c] == -1:
+        cnt = 0
 
-    if arr[pipe_r+1][pipe_c] == 0:
-        cnt += vertical(pipe_r+1, pipe_c, cnt)
-
-        if arr[pipe_r+1][pipe_c+1] == 0 and arr[pipe_r][pipe_c+1] == 0:
-            cnt += diagonal(pipe_r+1, pipe_c+1, cnt)
+        if arr[pipe_r+1][pipe_c] == 0:
+            cnt += vertical(pipe_r+1, pipe_c)
+            
+            if arr[pipe_r+1][pipe_c+1] == 0 and arr[pipe_r][pipe_c+1] == 0:
+                cnt += diagonal(pipe_r+1, pipe_c+1)
     
-    cnt += horizontal(pipe_r, pipe_c+1, cnt)
+        dp_v[pipe_r][pipe_c] = cnt
 
-    return cnt
+    return dp_v[pipe_r][pipe_c]
+
+def diagonal(pipe_r, pipe_c) -> int:
+    global arr, dp_d, N
+
+    # Enter only if not visited.
+    if dp_d[pipe_r][pipe_c] == -1:
+        cnt = 0
+
+        if arr[pipe_r][pipe_c+1] == 0:
+            cnt += horizontal(pipe_r, pipe_c+1)
+
+        if arr[pipe_r+1][pipe_c] == 0:
+            cnt += vertical(pipe_r+1, pipe_c)
+            
+            if arr[pipe_r+1][pipe_c+1] == 0 and arr[pipe_r][pipe_c+1] == 0:
+                cnt += diagonal(pipe_r+1, pipe_c+1)
+    
+        dp_d[pipe_r][pipe_c] = cnt
+
+    return dp_d[pipe_r][pipe_c]
 
 def main():
-    global arr
+    global arr, dp_h, dp_v, dp_d, N
     N = int(input().strip())
     arr = []
-    for i in range(N):
-        arr.append(list(map(int, input().split())))
 
+    # Input to array (room info).
+    for _ in range(N):
+        arr.append(list(map(int, input().split()))+[1])
+    arr.append([1]*(N+1))   # Make safety wall.
+
+    # Make DP for each case, and set the end point value.
+    dp_h = [[-1]*N for _ in range(N)]
+    dp_h[N-1][N-1] = 1
+
+    dp_v = [[-1]*N for _ in range(N)]
+    dp_v[N-1][N-1] = 1
+
+    dp_d = [[-1]*N for _ in range(N)]
+    dp_d[N-1][N-1] = 1
+
+    # Set the initial pipe.
     pipe_r = 0
     pipe_c = 1
-    horizontal(pipe_r, pipe_c, 0)
+
+    print(horizontal(pipe_r, pipe_c))
+
+main()
