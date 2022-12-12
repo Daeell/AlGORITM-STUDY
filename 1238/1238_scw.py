@@ -14,11 +14,11 @@ for _ in range(m): # 도시와 도로 매핑해줌
 def dijkstra(start) : # 다익스트라 탐색
     visited[start]=0
     heap=[]
-    heapq.heappush(heap,(0,start))
+    heapq.heappush(heap,(0,start)) # heap에는 시간, 시작점 순서로 넣어줌 - 시간이 가장 빠른애를 먼저 탐색할 수 있게함
 
     while heap:
         cost_val,x =heapq.heappop(heap)
-        if visited[x]<cost_val : continue        
+        if visited[x]<cost_val : continue
         for i in graph[x]:
             next=i[0]
             next_cost=cost_val+i[1]
