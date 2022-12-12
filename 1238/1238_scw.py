@@ -28,7 +28,7 @@ def dijkstra(start) : # 다익스트라 탐색
 
 answer=[0]*(n+1)
 for i in range(1,n+1):
-    visited = [999999999]*(n+1) # 방문 체크를 위한 visited
+    visited = [9999999]*(n+1) # 방문 체크를 위한 visited
     dijkstra(i)
     if i == x: # 목적지에서 돌린 다익스트라는 각 도시로 돌아갈때의 최소 시간을 의미함
         for i in range(1,n+1):
