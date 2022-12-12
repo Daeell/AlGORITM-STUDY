@@ -5,11 +5,11 @@ input=sys.stdin.readline
 
 n, m, x = map(int, input().strip().split()) # input : 도시 개수, 도로 정보, 목적지
 
-graph = defaultdict(list)
+graph = defaultdict(set)
 
 for _ in range(m): # 도시와 도로 매핑해줌
     s,e,t = map(int, input().strip().split())
-    graph[s].append([e,t])
+    graph[s].add((e,t))
 
 def dijkstra(start) : # 다익스트라 탐색
     visited[start]=0
