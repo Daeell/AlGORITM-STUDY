@@ -1,42 +1,36 @@
-from collections import deque
 import sys
+from collections import deque
 input = sys.stdin.readline
 
 N, M, L, K = map(int, input().split())
 N += 1; M += 1; L += 1
 
-area = [[0]*(N) for _ in range(M)]
+meteor = []
 
 for _ in range(K):
     x, y = map(int, input().split())
-    area[y][x] = 1
+    meteor.append((x, y))
+
+meteor.sort()
 
 # begin find
 maximum = 0
-for x in range(N-L):
-    line = deque()
-    line_cnt = 0
-    for y in range(M):
-        if line_cnt == L:
-            tmp = sum(line)
-            if tmp > maximum:
-                maximum = tmp
-            line.popleft()
-            line_cnt -= 1
+for i in range(K):
+    x_range = []
 
-        line.append(sum(area[y][x:x+L]))
-        line_cnt += 1
+    for j in range(i, K):
+        if meteor[i][0]+L < meteor[j][0]:
+            break
+        x_range.append(meteor[j])
+
+    x_range.sort(key=lambda x: x[1])
+    
+    y_range = deque()
+    for j in range(len(x_range)):
+        y_range.append(x_range[j])
+        if y_range[0][1]+L < x_range[j][1]:
+            y_range.popleft()
+        if len(y_range) > maximum:
+            maximum = len(y_range)
 
 print(K-maximum)
-
-# [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
-# [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0]
-# [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
-# [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
