@@ -1,28 +1,18 @@
+from bisect import bisect_left
 def main():
     N = int(input())
     inputs = list(map(int, input().split()))
 
-    arr = [0]*N
+    arr = []
+    arr.append(inputs[0])
 
-    for i in range(N-1, -1, -1):
-        start = i
-        end = N-1
-        found = -1
-
-        while start < end:
-            mid = (start + end) // 2
-            if arr[i] < arr[mid]:
-                found = mid
-                end = mid - 1
-            else:
-                start = mid - 1
-
-        if found != -1:
-            arr[i] = arr[mid] + 1
+    for i in range(1, N):
+        n = inputs[i]
+        if arr[-1] < n:
+            arr.append(n)
         else:
-            arr[i] = 1
+            arr[bisect_left(arr, n)] = n
 
-    print(max(arr))
-
+    print(len(arr))
 
 main()
