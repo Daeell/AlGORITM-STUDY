@@ -12,4 +12,9 @@ for a in A:
         idx = bisect_left(letsfind,a)
         letsfind[idx] = a
 
-print(len(letsfind)-1)
+if letsfind[0] == 0:        # 앞에 넣었던 0이 0이면 삭제를 진행 
+    del letsfind[0]
+
+print(len(letsfind))
+
+# print(letsfind)  # 수열 출력까지 가능한것으로 보임
