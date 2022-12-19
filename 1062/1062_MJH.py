@@ -3,38 +3,38 @@ import sys
 input = sys.stdin.readline
 
 def main():
-    N, K = map(int, input().split())
+    antic_letters = {'a', 'n', 't', 'i', 'c'}
     letters = []
-    alphabet = [0]*27
+    alphabet = set()
+
+    N, K = map(int, input().split())
+
     for i in range(N):
-        word = input().strip()
-        word = word.replace('a','')
-        word = word.replace('n','')
-        word = word.replace('t','')
-        word = word.replace('i','')
-        word = word.replace('c','')
-
-        letters.append(set())
-
+        word = input().strip()[4:-4]
+        letters.append(0)
         for letter in word:
-            letters[i].add(letter)
+            if letter not in antic_letters:
+                letters[i] = letters[i] | (1 << (ord(letter)-97))
+                alphabet.add(letter)
 
-        for letter in letters[i]:
-            alphabet[ord(letter)-97] += 1
+    if K < 5: return 0
+    if len(alphabet) <= K-5: return N
 
-    if K < 5:
-        return 0
-    
-    combinations()
-    letters.sort(key=lambda x: len(x))
+    nCr = combinations(alphabet, K-5)
 
-    i = 0
-    while True:
+    maximum = 0
+    for case in nCr:
+        case_bit = 0
+        for letter in case:
+            case_bit = case_bit | (1 << (ord(letter)-97))
+        cnt = 0
+        for i in range(N):
+            if (case_bit & letters[i]) == letters[i]:
+                cnt += 1
+        if maximum < cnt:
+            maximum = cnt
 
-        letters[i]
+    return maximum
 
-    print(letters)
-
-    return 0
 
 print(main())
