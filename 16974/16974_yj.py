@@ -5,7 +5,8 @@ input = sys.stdin.readline
 L, X = map(int, input().split())
 dp = [None for _ in range(L)] # dp[level] = 해당 레벨의 버거 
 
-# 대칭이라는 점을 이용해야 할 듯  
+
+
 def makeburger(L):
     if L == 0 :
         dp[0] = '1' 
@@ -15,7 +16,7 @@ def makeburger(L):
             return dp[L-1]
         else: 
             prevBurger = makeburger(L-1)
-            burger = '0'+prevBurger + '1'  #반만 저장한다 
+            burger = '0'+prevBurger+'1'+prevBurger+'0'
             dp[L-1] = burger
             return dp[L-1]
 

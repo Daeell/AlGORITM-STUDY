@@ -13,3 +13,4 @@ def getAnswer(n) :
 for i in range(len(N)) :
     N[i] = int(N[i].strip())
     print(getAnswer(N[i]))
+
