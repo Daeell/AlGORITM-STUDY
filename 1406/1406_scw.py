@@ -56,7 +56,8 @@ for _ in range(n):
         if len(Left) == 0:
             continue
         Left.pop()
-sorted(Right,reverse=True)
-result = Left + Right
-print(*result,sep="")
+# Right.sort(reverse=True)
+Right.reverse()
+print(*Left,sep="",end="")
+print(*Right,sep="")
 
