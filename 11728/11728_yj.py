@@ -3,9 +3,8 @@ sys.stdin=open("input.txt", "r")
 input = sys.stdin.readline
 
 nA, nB = map(int, input().split())
-A = set(map(int, input().split()))
-B = set(map(int, input().split()))
-ans = list(A|B)
+A = input().split() + input().split()
 
-print(ans)
-print(list(A|B).sort)
+ans = list(map(int, A))
+ans.sort()
+print(*ans, sep=" ")
