@@ -12,7 +12,7 @@ else:
     a = Word_length
     answer=0
     temp = '1'+'0'*(a-1)
-    if ['0','1','2','3','4','5','6','7','8','9'] in list(temp):
+    if len(set(list(temp)))==0:
         for N in permutations(list(temp),a):
             while len(N)==a:
                 dp=[0]*(a)
