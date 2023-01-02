@@ -1,62 +1,54 @@
 import sys
+from collections import defaultdict
 input = sys.stdin.readline
 
 def check(area) -> bool:
-    global jewels
     pass
 
 
-def cut(imp:tuple, impurities:set, area:list, isRow:bool) -> None:
-    global count
-    N = len(area)
-    impurities.remove(imp)
-    if isRow == True:
-        row = imp[0]
-        for i in range(N):
-            if area[row][i] == 2:
-                return
-            elif area[row][i] == 1:
-                impurities.remove((row, i))
-            area[row][i] = -1
-    else:
-        col = imp[1]
-        for i in range(N):
-            if area[i][col] == 2:
-                return
-            elif area[i][col] == 1:
-                impurities.remove((i, col))
-            area[i][col] = -1
-    if not len(impurities):
-        if check(area):
-            count += 1
+def cut_row(idx:int, area_start:tuple, area_end:tuple) -> None:
+    global count, area, jewels_row, jewels_col, impurities_rowsort, impurities_colsort
+    imp = impurities_rowsort[idx]
+    r = imp[0]; c = imp[1]
+    for i in range(area_start[0], area_end[0]+1):
+        if area[r][i] == 2:
             return
-    else:
-        cut(imp, impurities, area, not isRow)
+    for i in range()
+    cut_col()
 
 
-def parse(area:list) -> set:
-    impurities = set()
-    jewels = set()
+def cut_col(imp:tuple, area_start:tuple, area_end:tuple) -> None:
+    global count, area, jewels_row, jewels_col, impurities_rowsort, impurities_colsort
+    
+
+def parse(area:list):
+    impurities = []
+    jewels_row = defaultdict(list)
+    jewels_col = defaultdict(list)
     N = len(area)
     for i in range(N):
         for j in range(N):
             if area[i][j] == 1:
-                impurities.add((i, j))
+                impurities.append((i, j))
             elif area[i][j] == 2:
-                jewels.add((i, j))
-    return impurities, jewels
+                jewels_row[i].append(j)
+                jewels_col[j].append(i)
+    return impurities, jewels_row, jewels_col
 
 
 def main(N:int) -> int:
-    global count, jewels
+    global count, area, jewels_row, jewels_col, impurities_rowsort, impurities_colsort
     count = 0
     area = []
     for _ in range(N):
         area.append(list(map(int, input().split())))
-    impurities, jewels = parse(area)
-    for imp in impurities:
-        cut(imp, impurities, area, True)
-        cut(imp, impurities, area, False)
+    impurities, jewels_row, jewels_col = parse(area)
+    impurities_rowsort = sorted(impurities)
+    impurities_colsort = sorted(impurities, lambda x: x[1])
+    for i in range(len(impurities_rowsort)):
+        cut_row(i, (0,0), (N-1,N-1))
+    for imp in impurities_colsort:
+        cut_col(imp, (0,0), (N-1,N-1))
     return count
 
 
