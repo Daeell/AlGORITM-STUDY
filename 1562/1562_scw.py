@@ -11,10 +11,13 @@ if Word_length <=9:
 else:
     a = Word_length
     answer=0
-    temp = '1'+'0'*(a-1)
-    if len(set(list(temp)))==0:
-        for N in permutations(list(temp),a):
-            while len(N)==a:
+    temp = '1023456789'+'0'*(a-10)
+    while a==Word_length:
+        if len(set(list(temp)))==10:
+            print(temp)
+            for N in permutations(list(temp),a):
+                if N[0] == '0':
+                    continue
                 dp=[0]*(a)
                 cnt=0
                 for i in range(1,a):
@@ -28,7 +31,8 @@ else:
                     else:
                         cnt=0
                         dp[i]=dp[i-1]
-                N = str(int(N)+1)
-                print(N)
-                answer = answer + dp[a-1]
+            answer = answer + dp[a-1]
+        temp = str(int(temp)+1)
+        print(temp)
+        a=len(temp)
     print(answer%1000000000)
