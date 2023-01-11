@@ -31,14 +31,14 @@ dq = deque()
 
 for _ in range(N):
     start, end = map(int, input().strip().split())
-    answer_list = []
+    decimal_list = []
     answer_mid_list = []
     for i in range(start,end+1):
         if(isPrime(i)):
             if(checking_status(start, i)):
                 dq.append(i)
-            answer_list.append(i)
+            decimal_list.append(i)
 
-    print(answer_list)
+    print(decimal_list)
     print(answer_mid_list)
 
