@@ -11,6 +11,11 @@ def main():
     parent_info = [-1 for _ in range(NUMBER_OF_MACHINES + 1)]  # UNUSED index '0'
     line_info.sort(key=lambda x: x[2])
 
+    def find_root(cur):
+        while parent_info[cur] != cur:
+            cur = parent_info[cur]
+        return cur
+
     total_cost = 0
     connection_count = 0
     for i in range(NUMBER_OF_LINES):
@@ -27,20 +32,16 @@ def main():
         elif parent_info[a] == -1 and parent_info[b] == -1:
             parent_info[a] = a
             parent_info[b] = a
-        elif parent_info[a] == parent_info[b]:
-            continue
         elif parent_info[a] == -1:
-            parent_info[a] = b
+            parent_info[a] = find_root(b)
         elif parent_info[b] == -1:
-            parent_info[b] = a
+            parent_info[b] = find_root(a)
         else:
-            root_of_b = parent_info[b]
-            while parent_info[root_of_b] != root_of_b:
-                root_of_b = parent_info[root_of_b]
-            root_of_a = parent_info[a]
-            while parent_info[root_of_a] != root_of_a:
-                root_of_a = parent_info[root_of_a]
-            parent_info[root_of_b] = parent_info[root_of_a]
+            a_root = find_root(a)
+            b_root = find_root(b)
+            if a_root == b_root:
+                continue
+            parent_info[a_root] = parent_info[b_root]
 
         # 비용을 더해주고 개수를 카운트합니다.
         total_cost += cost
