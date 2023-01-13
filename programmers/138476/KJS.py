@@ -2,7 +2,6 @@ from collections import Counter
 
 def solution(k, tangerine):
     answer = 0
-    tangerine.sort()
     tangerine_counter = Counter(tangerine).most_common()
     cnt = 0
     for i in range(len(tangerine_counter)):
