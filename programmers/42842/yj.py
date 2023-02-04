@@ -29,4 +29,4 @@ def solution(brown, yellow):
         
     return answer
 
-print(solution(10, 2))
+
