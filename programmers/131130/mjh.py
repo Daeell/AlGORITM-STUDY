@@ -1,8 +1,8 @@
 def solution(cards):
     answer = 0
 
+    first_picked = set()
     for i in range(len(cards)):
-        first_picked = set()
         first_picked.add(i)
         iterator = i
         while len(first_picked) < len(cards):
