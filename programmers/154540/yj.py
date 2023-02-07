@@ -43,4 +43,3 @@ def solution(maps):
     print(answer)
 
 
-print(solution(["X591X", "X1X5X", "X231X", "1XXX1"]))
