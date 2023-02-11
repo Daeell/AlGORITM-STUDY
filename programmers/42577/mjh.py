@@ -1,26 +1,12 @@
-# 정확성 15, 19 / 효율성 4 실패
-from collections import defaultdict
-
+# PASSED
 def solution(phone_book):
     answer = True
-
-    dic = defaultdict(str)
-    
-    for i in range(len(phone_book)):
-        s = phone_book[i]
-        if dic[s[0]]:
-            cmp = dic[s[0]]
-            flag = True
-            for j in range(min(len(cmp), len(s))):
-                if cmp[j] != s[j]:
-                    flag = False
-                    break
-            if flag == True:
-                answer = False
-                break
-        else:
-            dic[s[0]] = s
-
+    phone_book.sort()
+    for i in range(1, len(phone_book)):
+        min_l = min(len(phone_book[i-1]), len(phone_book[i]))
+        if phone_book[i-1][:min_l] == phone_book[i][:min_l]:
+            answer = False
+            break
     return answer
 
 print(solution(["119", "97674223", "1195524421"]))

@@ -1,4 +1,4 @@
-# 20, 21, 30 실패
+# PASSED
 def solution(m, musicinfos):
     answer = ''
 
@@ -44,7 +44,7 @@ def solution(m, musicinfos):
     elif len(matched_musics) == 1:
         answer = matched_musics[0][2]
     else:
-        matched_musics.sort(key=lambda x: (x[0], x[1]))
+        matched_musics.sort(key=lambda x: (-x[0], x[1]))
         answer = matched_musics[0][2]
 
     return answer
