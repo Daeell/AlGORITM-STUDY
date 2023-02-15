@@ -2,7 +2,7 @@ def solution(n, lost, reserve):
     lost = sorted(lost)
     reserve = sorted(reserve)
 
-    available = [1 for _ in range(n+1)]
+    available = [1 for _ in range(n+2)]
     for i in lost:
         available[i] = 0
     for i in reserve:
