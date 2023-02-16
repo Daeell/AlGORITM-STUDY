@@ -1,33 +1,31 @@
-from itertools import permutations
+from itertools import product
 
 def solution(users, emoticons):
 
-    def dfs(x,y,depth):
-        if depth ==3:
-            return
-        else:
-            
-        
-    temp=[]
-    for i in range(len(users)):
-        temp.append(users[i][0])
+    answer = [0,0]
 
-    j =min(temp)
+    discount = [40, 30, 20, 10]
+    for sales in product(discount, repeat=len(emoticons)):
+        max_money = 0
+        subscribe = 0
 
-    if j <= 10:
-        j =0
-    elif j%10 ==0:
-        j = j//10 -1
-    else:
-        j = j//10
+        for rate, limit in users:
+            user_money =0
+            for i in range(len(emoticons)):
+                if rate <= sales[i]:
+                    user_money += int(emoticons[i] * ((100-sales[i])*0.01))
 
-    emoticons_sale = [[[10*i, emoticons[k]] for i in range(4,j,-1)] for k in range(len(emoticons))]
+            if user_money >= limit:
+                subscribe +=1
+            else:
+                max_money += user_money
 
-
-    for i in emoticons_sale:
-        print(i)
+        if subscribe > answer[0]:
+            answer[0] = subscribe
+            answer[1] = max_money
+        elif subscribe == answer[0] and answer[1]< max_money:
+            answer[1] = max_money
     
-    answer = []
     return answer
 
 print(solution([[40, 2900], [23, 10000], [11, 5200], [5, 5900], [40, 3100], [27, 9200], [32, 6900]], [1300, 1500, 1600, 4900]))
