@@ -5,7 +5,7 @@ def solution(users, emoticons):
     answer = [-1, -1]
 
     # 가능한 이모티콘 할인율 조합을 모두 생성합니다.
-    discount_rates = range(0, 41, 10)
+    discount_rates = range(10, 41, 10)
     for discounts in product(discount_rates, repeat=len(emoticons)):
         cost = 0  # 총 구매 비용을 저장할 변수
         new_users = 0  # 새로운 이모티콘 구매자 수를 저장할 변수
