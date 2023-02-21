@@ -8,7 +8,7 @@ def solution(genres, plays):
     for i in range(len(genres)):
         if genres[i] not in genres_counter:
             genres_counter[genres[i]] = []
-        heappush(genres_counter[genres[i]], (-plays[i], i, genres[i]))
+        heappush(genres_counter[genres[i]], (-plays[i], i))
     
     genres_list = []
     for genre in genres_counter:
