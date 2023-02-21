@@ -1,30 +1,33 @@
 from collections import deque
 
 def solution(maps):
-    direction = [(0,1), (1,0), (0,-1), (-1,0)]
-    dq = deque()
     m = len(maps)
     n = len(maps[0])
-    visited = [[-1]*n for _ in range(m)]
+    
     for i in range(len(maps)):
         maps[i] = list(maps[i])
         if 'S' in maps[i]:
             idx = maps[i].index('S')
-            dq.append((i, idx))
-            maps[i][idx] = 0
-            visited[i][idx]=0
+            start_point = [i, idx]
+            
         if 'L' in maps[i]:
             idx = maps[i].index('L')
-            Lever = [i,idx]
+            Lever = [i, idx]
         if 'E' in maps[i]:
             idx = maps[i].index('E')
-            end_point = [i,idx]
+            end_point = [i, idx]
 
-    def bfs(end_point_y, end_point_x)
+    def bfs(sp_y, sp_x, ep_y, ep_x):
+        direction = [(0,1), (1,0), (0,-1), (-1,0)]
+        dq = deque()
+        dq.append((sp_y, sp_x))
+        visited = [[-1]*n for _ in range(m)]
+        visited[sp_y][sp_x]=0
+
         while dq:
             y, x = dq.popleft()
-            if y == end_point[0] and x ==end_point[1]:
-                break
+            if y == ep_y and x ==ep_x:
+                return visited[y][x]
 
             for dy, dx in direction:
                 ny = y + dy
@@ -32,9 +35,18 @@ def solution(maps):
                 if 0<=nx< n and 0<=ny<m and maps[ny][nx] !='X' and visited[ny][nx] == -1:
                     visited[ny][nx] = visited[y][x]+1
                     dq.append((ny,nx))
+        
+        return -1
     
+    find_lever = bfs(start_point[0],start_point[1], Lever[0], Lever[1])
+    find_end = bfs(Lever[0], Lever[1], end_point[0], end_point[1])
 
-    return visited[temp[0]][temp[1]]
+    if find_lever == -1 or find_end ==-1:
+        answer = -1
+    else:
+        answer = find_lever + find_end
+
+    return answer
 
 
-print(solution(["SOOOXS","OOXXOO","OOOEOX","OOOXXX","OOOXXX"]))
+print(solution(["SOOOOOL","XXXXXXO","OOOOOOO","OXXXXXX","OOOOOOE"]))
