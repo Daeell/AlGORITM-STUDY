@@ -14,36 +14,15 @@ def solution(maps):
             elif maps[i][j] == 'L':
                 lever = (i, j)
 
-    visited = set()
-    queue = deque([(start[0], start[1], 0, False)])
+    visited = [[False]*mc for _ in range(mr)]
 
-    dr = [-1, 1, 0, 0]
-    dc = [0, 0, -1, 1]
+    queue = deque(start[0], start[1], 0)
+    visited[start[0]][start[1]] = True
 
     while queue:
-        r, c, time, lever_on = queue.popleft()
-
-        if (r, c) == end:
-            return time
-        if (r, c) in visited:
-            continue
-
-        visited.add((r, c))
-
-        for i in range(4):
-            nr = r + dr[i]
-            nc = c + dc[i]
-
-            if 0 <= nr < mr and 0 <= nc < mc and maps[nr][nc] != 'X':
-
-                if (nr, nc) == lever:
-                    if not lever_on:
-                        queue.append((nr, nc, time+1, True))
-                    queue.append((nr, nc, time+1, lever_on))
-                else:
-                    queue.append((nr, nc, time+1, lever_on))
-
-    return -1
+        r, c, dist = queue.popleft()
+        if (r, c) == lever:
+            break
 
 
 print(solution(["SOOOL", "XXXXO", "OOOOO", "OXXXX", "OOOOE"]))
