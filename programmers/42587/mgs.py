@@ -14,7 +14,8 @@ def solution(priorities, location):
     return_flag = False
     while return_flag == False :
         tmp = _print.popleft()
-        _max = max(_print)
+        if _print :
+            _max = max(_print)
 
         if tmp[0] < _max[0] :
             _print.append(tmp)
