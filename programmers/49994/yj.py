@@ -1,5 +1,4 @@
 
-
 def solution(dirs):
     answer = 0
     # 좌표는 가로 세로 -5 ~ 5, 출발은 (0,0)
@@ -18,14 +17,17 @@ def solution(dirs):
             
         # 이전 위치와 현재 위치를 string으로 road로 표시
         road = str(robot) + str([tmpX, tmpY])
-        print(road)
 
+        roadReverse= str([tmpX, tmpY]) + str(robot)
+
+        # 위치 갱신
         robot[0]= tmpX
         robot[1]= tmpY
+        
+        if road not in visited : 
+            visited.add(road)
+            visited.add(roadReverse)
 
-        road= 
-        if str(robot) not in visited : 
-            visited.add(str(robot))
             answer +=1 
         
     
