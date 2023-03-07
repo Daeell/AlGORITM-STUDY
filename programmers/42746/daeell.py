@@ -10,6 +10,7 @@ def solution(numbers):
 print(solution([6, 10, 2]))
 print(solution([3, 30, 34, 5, 9]))
 
+
 # 시간초과
 # def solution(numbers):
 #     # 1. 문자열로 변환
